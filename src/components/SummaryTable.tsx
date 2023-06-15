@@ -28,6 +28,7 @@ export function SummaryTable() {
     <div className="w-full flex">
       <div className="grid grid-rows-7 grid-flow-row gap-3">
         {weekDays.map((weekDay, index) => {
+          console.log(`${weekDay}-${index}`);
           return (
             <div
               key={`${weekDay}-${index}`}
@@ -40,19 +41,20 @@ export function SummaryTable() {
       </div>
 
       <div className="grid grid-rows-7 grid-flow-col gap-3">
-        {summaryDates.map((date) => {
-          const dateEqual = summary.find((day) => {
-            return dayjs(date).isSame(day.date, "day");
-          });
-          return (
-            <HabitDay
-              key={date.toString()}
-              date={date}
-              amount={dateEqual?.amount}
-              completed={dateEqual?.completed}
-            />
-          );
-        })}
+        {summary.length > 0 &&
+          summaryDates.map((date) => {
+            const dateEqual = summary.find((day) => {
+              return dayjs(date).isSame(day.date, "day");
+            });
+            return (
+              <HabitDay
+                key={date.toString()}
+                date={date}
+                amount={dateEqual?.amount}
+                defaultCompleted={dateEqual?.completed}
+              />
+            );
+          })}
 
         {amountOfDaysToFill > 0 &&
           Array.from({ length: amountOfDaysToFill }).map((_, i) => {
